@@ -13,32 +13,31 @@ int n,m,ct,map[300][300],check[300][300];
 int rotate[4][2]={{1,0},{-1,0},{0,1},{0,-1}};
 vector<info>sea;
 void ice(int x,int y){
-	int i,j,tmp_x,tmp_y,emp=0;
+	int i,tmp_x,tmp_y,emp=0;
 	check[x][y]=1;
 	ct++;
-	for(i=0;i<4;i++){ //ÀÎÁ¢ 4¹æÇâ Å½»ö
+	for(i=0;i<4;i++){ //ì¸ì ‘ 4ë°©í–¥ íƒìƒ‰
 		tmp_x=x+rotate[i][0];
 		tmp_y=y+rotate[i][1];
-		if(tmp_x<0||tmp_x>n-1||tmp_y<0||tmp_y>m-1) //¹üÀ§¸¦ ¹þ¾î³² 
+		if(tmp_x<0||tmp_x>n-1||tmp_y<0||tmp_y>m-1) //ë²”ìœ„ë¥¼ ë²—ì–´ë‚¨ 
 			continue;
-		if(map[tmp_x][tmp_y]<1){ //ºù»êÀÌ ¾ø´Â °ø°£ÀÎ °æ¿ì 
+		if(map[tmp_x][tmp_y]<1){ //ë¹™ì‚°ì´ ì—†ëŠ” ê³µê°„ì¸ ê²½ìš° 
 			emp++;
 			continue;
 		}
-		if(check[tmp_x][tmp_y]!=0) //ÀÌ¹Ì ¹æ¹®ÇÑ ³ëµå 
+		if(check[tmp_x][tmp_y]!=0) //ì´ë¯¸ ë°©ë¬¸í•œ ë…¸ë“œ 
 			continue;
-		ice(tmp_x,tmp_y); //Àç±ÍÈ£Ãâ 
+		ice(tmp_x,tmp_y); //ìž¬ê·€í˜¸ì¶œ 
 	}
-	sea.push_back(info(x,y,emp)); //ÁÂÇ¥, »¬ ¼ö¸¦ ±¸Á¶Ã¼·Î ÀúÀå 
+	sea.push_back(info(x,y,emp)); //ì¢Œí‘œ, ëº„ ìˆ˜ë¥¼ êµ¬ì¡°ì²´ë¡œ ì €ìž¥ 
 }
 int main(void){
 	int i,j,x,y,res=0,mt=0;
-	bool flag;
 	scanf("%d%d",&n,&m);
 	for(i=0;i<n;i++){
 		for(j=0;j<m;j++){
 			scanf("%d",&map[i][j]);
-			if(map[i][j]>0){ //ÇöÀç »ê °³¼ö¸¦ ÀúÀå 
+			if(map[i][j]>0){ //í˜„ìž¬ ì‚° ê°œìˆ˜ë¥¼ ì €ìž¥ 
 				mt++;
 				if(sea.empty())
 					sea.push_back(info(i,j,1));
@@ -46,11 +45,11 @@ int main(void){
 		}
 	}
 	while(1){
-		if(mt<=1){ //´õÀÌ»ó 2°³·Î ÂÉ°¶ ¼ö ¾øÀ½ (¾ø°Å³ª, 1°³ ³²Àº °æ¿ì) 
+		if(mt<=1){ //ë”ì´ìƒ 2ê°œë¡œ ìª¼ê°¤ ìˆ˜ ì—†ìŒ (ì—†ê±°ë‚˜, 1ê°œ ë‚¨ì€ ê²½ìš°) 
 			res=0;
 			break;
 		}
-		for(i=0;i<(int)sea.size();i++) //Ã¹ ºù»ê À§Ä¡ ÀúÀå
+		for(i=0;i<(int)sea.size();i++) //ì²« ë¹™ì‚° ìœ„ì¹˜ ì €ìž¥
 			if(map[sea[i].x][sea[i].y]>0)
 				break;
 		x=sea[i].x;
@@ -58,17 +57,17 @@ int main(void){
 		sea.clear();
 		ct=0;
 		ice(x,y);
-		if(ct<mt) //µ¢¾î¸®°¡ µÎ°³ ÀÌ»óÀÎ °æ¿ì Á¾·á (²÷¾îÁöÁö ¾ÊÀ»¶§±îÁö Å½»öÇß´Âµ¥ ÀüºÎ Å½»öÇÏÁö ¸øÇÔ) 
+		if(ct<mt) //ë©ì–´ë¦¬ê°€ ë‘ê°œ ì´ìƒì¸ ê²½ìš° ì¢…ë£Œ (ëŠì–´ì§€ì§€ ì•Šì„ë•Œê¹Œì§€ íƒìƒ‰í–ˆëŠ”ë° ì „ë¶€ íƒìƒ‰í•˜ì§€ ëª»í•¨) 
 			break;
-		for(i=0;i<(int)sea.size();i++){ //ÀúÀåµÈ Á¤º¸¸¦ ¹ÙÅÁÀ¸·Î ¿¬»ê ¼öÇà 
+		for(i=0;i<(int)sea.size();i++){ //ì €ìž¥ëœ ì •ë³´ë¥¼ ë°”íƒ•ìœ¼ë¡œ ì—°ì‚° ìˆ˜í–‰ 
 			x=sea[i].x;
 			y=sea[i].y;
 			map[x][y]-=sea[i].val;
 			if(map[x][y]<1)
 				mt--; 
-			check[x][y]=0; //Ã¼Å©¹è¿­ º¹±¸ 
+			check[x][y]=0; //ì²´í¬ë°°ì—´ ë³µêµ¬ 
 		}
-		res++; //1³â Áõ°¡
+		res++; //1ë…„ ì¦ê°€
 	}
 	printf("%d\n",res);
 	return 0;
