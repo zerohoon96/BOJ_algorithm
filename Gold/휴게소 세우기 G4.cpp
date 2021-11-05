@@ -17,6 +17,10 @@ int main(void){
     while(left<=right){ //이분탐색으로 진행
         ct=0;
         mid=(left+right)/2;
+        if(mid==0){
+            left=mid+1;
+            continue;
+        }
         for(i=1;i<n+2;i++){ //각 구간에 mid 간격으로 휴게소를 배치할때 총 개수 계산
             ct+=(arr[i]-arr[i-1]-1)/mid;
             if(ct>m) //m개보다 많으면 중단
